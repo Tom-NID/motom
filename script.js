@@ -5,7 +5,6 @@ var guess
 
 
 function regroup(){
-    console.log("regroup")
     let allWords = ""
     for(let i = 4; i < 12; i++){
         let wordList = new XMLHttpRequest();
@@ -19,7 +18,6 @@ function regroup(){
 const allWords = regroup()
 
 function wordChoice(){
-    console.log("wordChoice")
     let l = String(Math.floor(Math.random() * 8 + 4))
     var wordList = new XMLHttpRequest();
     wordList.open("GET", "mots/mots_" + l + ".txt", false)
@@ -30,7 +28,6 @@ function wordChoice(){
 }
 
 function creationGrille(mot){
-    console.log("creationGrille")
     for(let i = 0; i < 6; i++){
         let ligne = document.createElement("tr")
         ligne.id = String(i)
@@ -78,7 +75,6 @@ function initKeyboard(){
 
 document.onkeydown = function (e) {write(e.key)}
 function write(key){
-    console.log("onkeydomn")
     if("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".includes(key)){
         if(currentFrame.id[1] != mot.length - 1){
             currentFrame = document.getElementById(currentLine.id + String(Number(currentFrame.id[1]) + 1))
@@ -111,7 +107,6 @@ function write(key){
 }
 
 function verification(){
-    console.log("verification")
     if(mot == guess){
         alert("Gagne !")
         document.getElementById("grille").remove()
@@ -138,7 +133,6 @@ function verification(){
 }
 
 function replay(){
-    console.log("replay")
     mot = wordChoice()
     guess = mot[0]
     const Grille = document.createElement("table")
@@ -148,7 +142,6 @@ function replay(){
     currentLine = document.getElementById("0")
     document.getElementById("00").innerHTML = mot[0]
     currentFrame = document.getElementById("00")
-    console.log(currentFrame, currentLine)
     initKeyboard()
 }
 
