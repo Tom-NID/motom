@@ -3,6 +3,7 @@ var currentFrame
 var currentLine
 var guess
 
+
 function regroup(){
     console.log("regroup")
     let allWords = ""
@@ -20,7 +21,6 @@ const allWords = regroup()
 function wordChoice(){
     console.log("wordChoice")
     let l = String(Math.floor(Math.random() * 8 + 4))
-    // console.log(l)
     var wordList = new XMLHttpRequest();
     wordList.open("GET", "mots/mots_" + l + ".txt", false)
     wordList.send(null);
@@ -31,7 +31,6 @@ function wordChoice(){
 
 function creationGrille(mot){
     console.log("creationGrille")
-    // console.log(mot)
     for(let i = 0; i < 6; i++){
         let ligne = document.createElement("tr")
         ligne.id = String(i)
@@ -47,36 +46,54 @@ function creationGrille(mot){
 }
 
 function initKeyboard(){
-    let letters = "AZERTYUIOPQSDFGHJKLMWXCVBN"
+    let letters = "AZERTYUIOPQSDFGHJKLM.WXCVBN,"
     let keyboard = document.createElement("div")
     document.body.appendChild(keyboard)
     keyboard.id = "keyboard"
-    for(let i = 0; i < 10; i++){
-        let key = document.createElement("div")
-        key.id = letters[i]
-        key.className = "key"
-        key.innerHTML = key.id
+    for(let i = 0; i < 28; i++){
+        let key = document.createElement("button")
         document.getElementById("keyboard").appendChild(key)
+        if(letters[i] == '.'){
+            key.id = "Backspace"
+            img = document.createElement("img")
+            img.src = "del.svg"
+            key.className = "specialKey"
+            document.getElementById(key.id).appendChild(img)
+        }
+        else if(letters[i] == ','){
+            key.id = "Enter"
+            img = document.createElement("img")
+            img.src = "enter.svg"
+            key.className = "specialKey"
+            document.getElementById(key.id).appendChild(img)
+        }
+        else{
+            key.id = letters[i]
+            key.className = "key"
+            key.innerHTML = key.id 
+        }
+        key.onclick = function(){write(key.id)}
     }
 }
 
-document.onkeydown = function (e) {
+document.onkeydown = function (e) {write(e.key)}
+function write(key){
     console.log("onkeydomn")
-    if("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".includes(e.key)){
+    if("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".includes(key)){
         if(currentFrame.id[1] != mot.length - 1){
             currentFrame = document.getElementById(currentLine.id + String(Number(currentFrame.id[1]) + 1))
-            currentFrame.innerHTML = (e.key).toUpperCase()
-            guess += (e.key).toUpperCase()
+            currentFrame.innerHTML = (key).toUpperCase()
+            guess += (key).toUpperCase()
         }
     }
-    else if(e.key == "Backspace"){
+    else if(key == "Backspace"){
         if(currentFrame.id[1] != 0){
             currentFrame.innerHTML = ""
             currentFrame = document.getElementById(currentLine.id + String(Number(currentFrame.id[1]) - 1))
             guess = guess.slice(0, -1)
         }
     }
-    else if(e.key == "Enter"){
+    else if(key == "Enter"){
         if(guess.length == mot.length && allWords.includes(guess)){
             if(!verification()){
                 currentLine = document.getElementById(String(Number(currentLine.id) + 1))
@@ -91,7 +108,6 @@ document.onkeydown = function (e) {
             alert("Ce mot n'est pas dans le dictionnaire.")
         }
     }
-    // console.log(guess)
 }
 
 function verification(){
@@ -99,36 +115,31 @@ function verification(){
     if(mot == guess){
         alert("Gagne !")
         document.getElementById("grille").remove()
+        document.getElementById("keyboard").remove()
         replay()
         return true
     }
-    console.log("radis")
     let motTempon = mot
     for(let i = 0; i < guess.length; i++){
         if(mot[i] == guess[i]){
-            document.getElementById(currentLine.id + String(i)).style.backgroundColor = "red"
-            // document.getElementById(String(Number(currentLine.id) + 1) + String(i)).innerHTML = guess[i]
+            odocument.getElementById(currentLine.id + String(i)).style.backgroundColor = "red"
+            document.getElementById(String(Number(currentLine.id) + 1) + String(i)).innerHTML = guess[i]
             motTempon = motTempon.replace(motTempon[i], '.')
             guess = guess.replace(guess[i], ',')
         }
-        // console.log(currentLine.id + String(i))
-        // console.log(motTempon, guess)
     }
     for(let i = 0; i < guess.length; i++){
         if(motTempon.includes(guess[i])){
             motTempon = motTempon.replace(guess[i], '.')
             document.getElementById(currentLine.id + String(i)).style.backgroundColor = "yellow"
         }
-        // console.log(motTempon, guess)
     }
-    // console.log(motTempon, guess)
     guess = mot[0]
 }
 
 function replay(){
     console.log("replay")
     mot = wordChoice()
-    document.body.innerHTML = mot
     guess = mot[0]
     const Grille = document.createElement("table")
     Grille.id = "grille"
@@ -138,6 +149,8 @@ function replay(){
     document.getElementById("00").innerHTML = mot[0]
     currentFrame = document.getElementById("00")
     console.log(currentFrame, currentLine)
+    initKeyboard()
 }
+
 
 replay()

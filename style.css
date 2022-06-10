@@ -3,8 +3,15 @@ body{
     color: rgb(30, 30, 34);
 }
 
+title{
+    color: red;
+}
+
 #grille{
-    background-color: black;
+    background-color: rgb(30, 30, 34);
+    margin: auto;
+    margin-top: 10%;
+    margin-bottom: 10%;
 }
 
 .line{
@@ -18,13 +25,37 @@ body{
     text-align: center;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 40px;
+    border-radius: 5px;
+    margin: 5px;
 }
 
 #keyboard{
-    width: 250;
-    height:75px ;
+    width: 540px;
+    height:162px;
+    background-color: transparent;
+    margin: auto;
 }
 
 .key{
-    width: 25px;
+    width: 50px;
+    height: 50px;
+    background-color: gray;
+    border-radius: 10px;
+    border: none;
+    margin: 2px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 25px;
 }
+
+.specialKey{
+    width: 100px;
+    height: 50px;
+    background-color: gray;
+    border-radius: 10px;
+    border: none;
+    align-content: center;
+    justify-content: flex-end;
+    margin: 4px;
+}
+
+
