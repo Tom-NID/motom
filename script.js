@@ -122,7 +122,7 @@ function verification(){
     let motTempon = mot
     for(let i = 0; i < guess.length; i++){
         if(mot[i] == guess[i]){
-            odocument.getElementById(currentLine.id + String(i)).style.backgroundColor = "red"
+            document.getElementById(currentLine.id + String(i)).style.backgroundColor = "red"
             document.getElementById(String(Number(currentLine.id) + 1) + String(i)).innerHTML = guess[i]
             motTempon = motTempon.replace(motTempon[i], '.')
             guess = guess.replace(guess[i], ',')
