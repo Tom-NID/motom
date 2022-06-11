@@ -76,12 +76,17 @@ function write(key){
             currentFrame = document.getElementById(currentLine.id + String(Number(currentFrame.id[1]) + 1))
             currentFrame.innerHTML = (key).toUpperCase()
             currentFrame.style.color = "#2f0c50"
+            currentFrame.style.backgroundColor = "#008cff"
             guess += (key).toUpperCase()
         }
     }
     else if(key == "Backspace"){
         if(currentFrame.id[1] != 0){
             currentFrame.innerHTML = ""
+            if(goodLetters.includes(currentFrame.id[1])){
+                currentFrame.innerHTML = mot[Number(currentFrame.id[1])]
+            }
+            currentFrame.style.backgroundColor = "#135b96"
             currentFrame = document.getElementById(currentLine.id + String(Number(currentFrame.id[1]) - 1))
             guess = guess.slice(0, -1)
         }
@@ -92,6 +97,7 @@ function write(key){
                 currentLine = document.getElementById(String(Number(currentLine.id) + 1))
                 currentFrame = document.getElementById(currentLine.id + "0")
                 currentFrame.innerHTML = guess
+                currentFrame.style.backgroundColor = "#008cff"
             }
         }
         else if(guess.length != mot.length){
@@ -127,9 +133,9 @@ function verification(){
     let motTempon = mot
     for(let i = 0; i < guess.length; i++){
         if(mot[i] == guess[i]){
-            motTempon = motTempon.replace(motTempon[i], '.')
-            a = a.replace(guess[i], 'r')
-            guess = guess.replace(guess[i], ',')
+            motTempon = motTempon.substring(0, i) + '.' + motTempon.substring(i + 1)
+            a = a.substring(0, i) + 'r' + a.substring(i + 1)
+            guess = guess.substring(0, i) + ',' + guess.substring(i + 1)
             if(!goodLetters.includes(String(i))){
                 goodLetters += String(i)
             }
@@ -138,29 +144,26 @@ function verification(){
     }
     for(let i = 0; i < guess.length; i++){
         if(motTempon.includes(guess[i])){
-            motTempon = motTempon.replace(guess[i], '.')
-            a = a.replace(guess[i], 'j')
-            guess = guess.replace(guess[i], ',')
+            motTempon = motTempon.substring(0, i) + '.' + motTempon.substring(i + 1)
+            a = a.substring(0, i) + 'j' + a.substring(i + 1)
+            guess = guess.substring(0, i) + ',' + guess.substring(i + 1)
         }
     }
     for(let i = 0; i < guess.length; i++){
         if(guess[i] != ','){
-            a = a.replace(guess[i], 'g')
+            a = a.substring(0, i) + 'g' + a.substring(i + 1)
         }
     }
     for(let i = 0; i < a.length; i ++){
         lineAnim(a[i], i, tempGuess)
     }
     guess = mot[0]
-    console.log(a)
 }
 
 function lineAnim(l, i, guess){
     setTimeout(() => {
         document.getElementById(String(Number(currentLine.id - 1)) + String(i)).className = "verif"
-        console.log(currentLine)
         setTimeout(() => {
-            console.log(currentLine)
             switch(l){
                 case 'r':
                     document.getElementById(String(Number(currentLine.id - 1)) + String(i)).style.backgroundColor = "red"
@@ -171,7 +174,7 @@ function lineAnim(l, i, guess){
                     document.getElementById(guess[i]).style.backgroundColor = "yellow"
                     break;
                 case 'g':
-                    document.getElementById(String(Number(currentLine.id - 1)) + String(i)).style.backgroundColor = "#008cff"
+                    document.getElementById(String(Number(currentLine.id - 1)) + String(i)).style.backgroundColor = "#135b96"
                     document.getElementById(guess[i]).style.backgroundColor = "rgb(50, 50, 54)"
                     break;
             }
@@ -185,6 +188,7 @@ function lineAnim(l, i, guess){
 
 function replay(){
     mot = wordChoice()
+    mot = "SIXTIES"
     guess = mot[0]
     goodLetters = ''
     const Grille = document.createElement("table")
@@ -194,6 +198,7 @@ function replay(){
     currentLine = document.getElementById("0")
     document.getElementById("00").innerHTML = mot[0]
     currentFrame = document.getElementById("00")
+    currentFrame.style.backgroundColor = "#008cff"
     initKeyboard()
 }
 
