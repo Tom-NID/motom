@@ -185,7 +185,6 @@ function lineAnim(l, i, guess){
 
 function replay(){
     mot = wordChoice()
-    mot = "AMORCA"
     guess = mot[0]
     goodLetters = ''
     const Grille = document.createElement("table")

@@ -80,6 +80,10 @@ title{
         width: 38px;
         font-size: 35px;
     }
+    .verif{
+        width: 38px;
+        font-size: 35px;
+    }
     .line{
         height: 40px;
     }
@@ -103,6 +107,10 @@ title{
         width: 28px;
         font-size: 25px;
     }
+    .verif{
+        width: 28px;
+        font-size: 25px;
+    }
     .line{
         height: 30px;
     }
@@ -122,6 +130,10 @@ title{
 
 @media screen and (max-width: 402px) {
     .frame{
+        width: 23px;
+        font-size: 20px;
+    }
+    .verif{
         width: 23px;
         font-size: 20px;
     }
