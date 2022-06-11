@@ -19,13 +19,8 @@ function regroup(){
 const allWords = regroup()
 
 function wordChoice(){
-    let l = String(Math.floor(Math.random() * 8 + 4))
-    var wordList = new XMLHttpRequest();
-    wordList.open("GET", "mots/mots_" + l + ".txt", false)
-    wordList.send(null);
-    wordList = wordList.responseText.split("\n")
-    let i = Math.floor(Math.random() * wordList.length)
-    return wordList[i].toUpperCase()
+    let i = Math.floor(Math.random() * allWords.length)
+    return allWords[i]
 }
 
 function creationGrille(mot){
@@ -54,14 +49,14 @@ function initKeyboard(){
         if(letters[i] == '.'){
             key.id = "Backspace"
             img = document.createElement("img")
-            img.src = "del.svg"
+            img.src = "icons/del.svg"
             key.className = "specialKey"
             document.getElementById(key.id).appendChild(img)
         }
         else if(letters[i] == ','){
             key.id = "Enter"
             img = document.createElement("img")
-            img.src = "enter.svg"
+            img.src = "icons/enter.svg"
             key.className = "specialKey"
             document.getElementById(key.id).appendChild(img)
         }
@@ -80,6 +75,7 @@ function write(key){
         if(currentFrame.id[1] != mot.length - 1){
             currentFrame = document.getElementById(currentLine.id + String(Number(currentFrame.id[1]) + 1))
             currentFrame.innerHTML = (key).toUpperCase()
+            currentFrame.style.color = "#2f0c50"
             guess += (key).toUpperCase()
         }
     }
@@ -108,55 +104,88 @@ function write(key){
 }
 
 function verification(){
+    let a = guess
+    let tempGuess = guess
     if(mot == guess){
-        alert("Gagne !")
-        document.getElementById("grille").remove()
-        document.getElementById("keyboard").remove()
-        replay()
-        return true
+        setTimeout(() => {
+            alert("Gagne !")
+            document.getElementById("grille").remove()
+            document.getElementById("keyboard").remove()
+            replay()
+            return true 
+        }, mot.length * 300);
     }
     if(currentLine.id == '5'){
-        alert("Tu as perdu ! \n Le mot etait " + mot + '.')
-        document.getElementById("grille").remove()
-        document.getElementById("keyboard").remove()
-        replay()
+        setTimeout(() => {
+            alert("Tu as perdu ! \n Le mot etait " + mot + '.')
+            document.getElementById("grille").remove()
+            document.getElementById("keyboard").remove()
+            replay()
         return true
+        }, mot.length * 300);
     }
     let motTempon = mot
     for(let i = 0; i < guess.length; i++){
         if(mot[i] == guess[i]){
-            document.getElementById(currentLine.id + String(i)).style.backgroundColor = "red"
-            document.getElementById(mot[i]).style.backgroundColor = "red"
             motTempon = motTempon.replace(motTempon[i], '.')
+            a = a.replace(guess[i], 'r')
             guess = guess.replace(guess[i], ',')
             if(!goodLetters.includes(String(i))){
                 goodLetters += String(i)
             }
+            
         }
     }
     for(let i = 0; i < guess.length; i++){
         if(motTempon.includes(guess[i])){
             motTempon = motTempon.replace(guess[i], '.')
-            document.getElementById(currentLine.id + String(i)).style.backgroundColor = "yellow"
-            if(document.getElementById(guess[i]).style["backgroundColor"] == ""){
-                document.getElementById(guess[i]).style.backgroundColor = "yellow"
-            }
+            a = a.replace(guess[i], 'j')
             guess = guess.replace(guess[i], ',')
         }
     }
     for(let i = 0; i < guess.length; i++){
         if(guess[i] != ','){
-            document.getElementById(guess[i]).style.backgroundColor = "rgb(50, 50, 54)"
-        }
-        if(goodLetters.includes(String(i))){
-            document.getElementById(String(Number(currentLine.id) + 1) + String(i)).innerHTML = mot[i]
+            a = a.replace(guess[i], 'g')
         }
     }
+    for(let i = 0; i < a.length; i ++){
+        lineAnim(a[i], i, tempGuess)
+    }
     guess = mot[0]
+    console.log(a)
+}
+
+function lineAnim(l, i, guess){
+    setTimeout(() => {
+        document.getElementById(String(Number(currentLine.id - 1)) + String(i)).className = "verif"
+        console.log(currentLine)
+        setTimeout(() => {
+            console.log(currentLine)
+            switch(l){
+                case 'r':
+                    document.getElementById(String(Number(currentLine.id - 1)) + String(i)).style.backgroundColor = "red"
+                    document.getElementById(mot[i]).style.backgroundColor = "red"
+                    break;
+                case 'j':
+                    document.getElementById(String(Number(currentLine.id - 1)) + String(i)).style.backgroundColor = "yellow"
+                    document.getElementById(guess[i]).style.backgroundColor = "yellow"
+                    break;
+                case 'g':
+                    document.getElementById(String(Number(currentLine.id - 1)) + String(i)).style.backgroundColor = "#008cff"
+                    document.getElementById(guess[i]).style.backgroundColor = "rgb(50, 50, 54)"
+                    break;
+            }
+            if(goodLetters.includes(i) && i > 0){
+                document.getElementById(currentLine.id + String(i)).innerHTML = mot[i]
+                document.getElementById(currentLine.id + String(i)).style.color = '#392c45'
+            }
+        }, 150)
+    }, 200 * i)
 }
 
 function replay(){
     mot = wordChoice()
+    mot = "AMORCA"
     guess = mot[0]
     goodLetters = ''
     const Grille = document.createElement("table")
@@ -168,6 +197,5 @@ function replay(){
     currentFrame = document.getElementById("00")
     initKeyboard()
 }
-
 
 replay()

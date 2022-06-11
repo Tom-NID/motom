@@ -19,14 +19,13 @@ title{
 }
 
 .frame{
-    width: 50px;
+    width: 48px;
     background-color: #008cff;
     color: #2f0c50;
     text-align: center;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 40px;
     border-radius: 5px;
-    margin: 5px;
 }
 
 #keyboard{
@@ -58,4 +57,88 @@ title{
     margin: 4px;
 }
 
+.verif{
+    color: #2f0c50;
+    background-color: #008cff;
+    text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 40px;
+    border-radius: 5px;
+    transform: rotateX(180deg);
+    animation : spinAnimation .3s;
+    animation-fill-mode: forwards;
+}
 
+@keyframes spinAnimation {
+    100%{
+        transform: rotateX(360deg);
+    }
+}
+
+@media screen and (max-width: 642px) {
+    .frame{
+        width: 38px;
+        font-size: 35px;
+    }
+    .line{
+        height: 40px;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .key{
+        width: 40px;
+    }
+    .specialKey{
+        width: 80px;
+    }
+    #keyboard{
+        width: 440px;
+    }
+}
+
+
+@media screen and (max-width: 522px) {
+    .frame{
+        width: 28px;
+        font-size: 25px;
+    }
+    .line{
+        height: 30px;
+    }
+}
+
+@media screen and (max-width: 455px) {
+    .key{
+        width: 30px;
+    }
+    .specialKey{
+        width: 60px;
+    }
+    #keyboard{
+        width: 340px;
+    }
+}
+
+@media screen and (max-width: 402px) {
+    .frame{
+        width: 23px;
+        font-size: 20px;
+    }
+    .line{
+        height: 25px;
+    }
+}
+
+@media screen and (max-width: 355px) {
+    .key{
+        width: 25px;
+        font-size: 20px;
+    }
+    .specialKey{
+        width: 50px;
+    }
+    #keyboard{
+        width: 290px;
+    }
+}
