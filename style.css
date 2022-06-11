@@ -6,11 +6,13 @@ title{
     color: red;
 }
 
+
+
 #grille{
     background-color: rgb(30, 30, 34);
     margin: auto;
     margin-top: 5%;
-    margin-bottom: 5%;
+    margin-bottom: 3%;
 }
 
 .line{
@@ -66,6 +68,19 @@ title{
     transform: rotateX(180deg);
     animation : spinAnimation .3s;
     animation-fill-mode: forwards;
+}
+
+#wordLength{
+    margin-bottom: -4%;
+    color: gray;
+    }
+
+#box{
+    height: 50px;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #008cff;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 @keyframes spinAnimation {

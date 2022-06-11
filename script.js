@@ -3,24 +3,40 @@ var currentFrame
 var currentLine
 var guess
 var goodLetters
+var allWords
 
 
 function regroup(){
     let allWords = ""
-    for(let i = 4; i < 12; i++){
+    if(!document.getElementById("checkbox").checked){
+        console.log(document.getElementById("checkbox").checked)
+        for(let i = 4; i < 10; i++){
+            let wordList = new XMLHttpRequest();
+            wordList.open("GET", "mots/mots_" + String(i) + ".txt", false)
+            wordList.send(null);
+            allWords += wordList.responseText.toUpperCase()
+        }
+    }
+    else{
         let wordList = new XMLHttpRequest();
-        wordList.open("GET", "mots/mots_" + String(i) + ".txt", false)
+        wordList.open("GET", "mots/mots_" + Number(document.getElementById("wordLength").value) + ".txt", false)
         wordList.send(null);
         allWords += wordList.responseText.toUpperCase()
     }
+
     return allWords.split("\n")
 }
-
-const allWords = regroup()
 
 function wordChoice(){
     let i = Math.floor(Math.random() * allWords.length)
     return allWords[i]
+}
+
+document.getElementById("wordLength").onchange = function(){
+    document.getElementById("grille").remove()
+    document.getElementById("keyboard").remove()
+    allWords = regroup()
+    replay()
 }
 
 function creationGrille(mot){
@@ -63,7 +79,7 @@ function initKeyboard(){
         else{
             key.id = letters[i]
             key.className = "key"
-            key.innerHTML = key.id 
+            key.innerHTML = key.id
         }
         key.onclick = function(){write(key.id)}
     }
@@ -71,6 +87,7 @@ function initKeyboard(){
 
 document.onkeydown = function (e) {write(e.key)}
 function write(key){
+    console.log(currentFrame)
     if("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".includes(key)){
         if(currentFrame.id[1] != mot.length - 1){
             currentFrame = document.getElementById(currentLine.id + String(Number(currentFrame.id[1]) + 1))
@@ -118,7 +135,7 @@ function verification(){
             document.getElementById("grille").remove()
             document.getElementById("keyboard").remove()
             replay()
-            return true 
+            return true
         }, mot.length * 300);
     }
     if(currentLine.id == '5'){
@@ -139,12 +156,12 @@ function verification(){
             if(!goodLetters.includes(String(i))){
                 goodLetters += String(i)
             }
-            
+
         }
     }
     for(let i = 0; i < guess.length; i++){
         if(motTempon.includes(guess[i])){
-            motTempon = motTempon.substring(0, i) + '.' + motTempon.substring(i + 1)
+            motTempon = motTempon.replace(guess[i], '.')
             a = a.substring(0, i) + 'j' + a.substring(i + 1)
             guess = guess.substring(0, i) + ',' + guess.substring(i + 1)
         }
@@ -187,6 +204,7 @@ function lineAnim(l, i, guess){
 }
 
 function replay(){
+    allWords = regroup()
     mot = wordChoice()
     guess = mot[0]
     goodLetters = ''
