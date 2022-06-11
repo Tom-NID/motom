@@ -2,6 +2,7 @@ var mot
 var currentFrame
 var currentLine
 var guess
+var goodLetters
 
 
 function regroup(){
@@ -114,19 +115,41 @@ function verification(){
         replay()
         return true
     }
+    if(currentLine.id == '5'){
+        alert("Tu as perdu ! \n Le mot etait " + mot + '.')
+        document.getElementById("grille").remove()
+        document.getElementById("keyboard").remove()
+        replay()
+        return true
+    }
     let motTempon = mot
     for(let i = 0; i < guess.length; i++){
         if(mot[i] == guess[i]){
             document.getElementById(currentLine.id + String(i)).style.backgroundColor = "red"
-            document.getElementById(String(Number(currentLine.id) + 1) + String(i)).innerHTML = guess[i]
+            document.getElementById(mot[i]).style.backgroundColor = "red"
             motTempon = motTempon.replace(motTempon[i], '.')
             guess = guess.replace(guess[i], ',')
+            if(!goodLetters.includes(String(i))){
+                goodLetters += String(i)
+            }
         }
     }
     for(let i = 0; i < guess.length; i++){
         if(motTempon.includes(guess[i])){
             motTempon = motTempon.replace(guess[i], '.')
             document.getElementById(currentLine.id + String(i)).style.backgroundColor = "yellow"
+            if(document.getElementById(guess[i]).style["backgroundColor"] == ""){
+                document.getElementById(guess[i]).style.backgroundColor = "yellow"
+            }
+            guess = guess.replace(guess[i], ',')
+        }
+    }
+    for(let i = 0; i < guess.length; i++){
+        if(guess[i] != ','){
+            document.getElementById(guess[i]).style.backgroundColor = "rgb(50, 50, 54)"
+        }
+        if(goodLetters.includes(String(i))){
+            document.getElementById(String(Number(currentLine.id) + 1) + String(i)).innerHTML = mot[i]
         }
     }
     guess = mot[0]
@@ -135,6 +158,7 @@ function verification(){
 function replay(){
     mot = wordChoice()
     guess = mot[0]
+    goodLetters = ''
     const Grille = document.createElement("table")
     Grille.id = "grille"
     document.body.appendChild(Grille)
