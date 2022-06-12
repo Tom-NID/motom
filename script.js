@@ -145,7 +145,6 @@ function write(key){
                 document.getElementById(currentLine.id + String(i)).offsetWidth
                 document.getElementById(currentLine.id + String(i)).classList.add("error")
             }
-            // alert("Ce mot est trop court.")
         }
         else if(!allWords.includes(guess)){
             // console.log(guess)
@@ -156,6 +155,10 @@ function write(key){
                 document.getElementById(currentLine.id + String(i)).offsetWidth
                 document.getElementById(currentLine.id + String(i)).classList.add("error")
             }
+            document.getElementById("notif").innerHTML = "Ce mot n'est pas dans le dictionnaire."
+            document.getElementById("notif").classList.remove("notif")
+            document.getElementById("notif").offsetWidth
+            document.getElementById("notif").classList.add("notif")
             // alert("Ce mot n'est pas dans le dictionnaire.")
         }
     }
@@ -228,8 +231,10 @@ function lineAnim(l, i, guess){
                     document.getElementById(guess[i]).style.backgroundColor = "#AC8949"
                     break;
                 case 'g':
+                    if(document.getElementById(guess[i]).style["backgroundColor"] == ''){
+                        document.getElementById(guess[i]).style.backgroundColor = "rgb(50, 50, 54)"
+                    }
                     document.getElementById(String(Number(currentLine.id - 1)) + String(i)).style.backgroundColor = "#8981A9"
-                    document.getElementById(guess[i]).style.backgroundColor = "rgb(50, 50, 54)"
                     break;
             }
             if(goodLetters.includes(i) && i > 0){
