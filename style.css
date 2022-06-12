@@ -1,18 +1,19 @@
 body{
     background-color: rgb(30, 30, 34);
+    background-color: #8981A9;
 }
 
 title{
     color: red;
 }
 
-
-
 #grille{
-    background-color: rgb(30, 30, 34);
+    background-color: #f5deb3;
     margin: auto;
-    margin-top: 5%;
-    margin-bottom: 3%;
+    margin-top: 45px;
+    margin-bottom: 35px;
+    padding: 2px;
+    border-radius: 10px;
 }
 
 .line{
@@ -21,18 +22,21 @@ title{
 
 .frame{
     width: 48px;
-    background-color: #135b96;
+    background-color: #8981A9;
     color: #2f0c50;
     text-align: center;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 40px;
     border-radius: 5px;
+    border: solid 1px transparent;
 }
 
 #keyboard{
     width: 540px;
     height:162px;
-    background-color: transparent;
+    background-color: wheat;
+    padding: 5px;
+    border-radius: 10px;
     margin: auto;
 }
 
@@ -45,41 +49,51 @@ title{
     margin: 2px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 25px;
+
 }
 
 .specialKey{
     width: 100px;
-    height: 50px;
-    background-color: gray;
-    border-radius: 10px;
-    border: none;
-    align-content: center;
-    justify-content: flex-end;
     margin: 4px;
 }
 
-.verif{
-    color: #2f0c50;
-    background-color: #008cff;
-    text-align: center;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 40px;
-    border-radius: 5px;
-    transform: rotateX(180deg);
-    animation : spinAnimation .3s;
-    animation-fill-mode: forwards;
+.key:hover{
+    background-color: rgb(192, 186, 186);
 }
 
 #wordLength{
-    margin-bottom: -4%;
     color: gray;
     }
 
+.slider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    height: 15px; /* Specified height */
+    background: #d3d3d3; /* Grey background */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+}
+.slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    margin-top: -7px;
+    width: 15px; /* Set a specific slider handle width */
+    height: 15px; /* Slider handle height */
+    background: #FFF2D9; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+
+
 #box{
-    height: 50px;
+    height: 40px;
     border-radius: 10px;
     text-align: center;
-    background-color: #008cff;
+    background-color: #665B8F;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
@@ -87,6 +101,38 @@ title{
     100%{
         transform: rotateX(360deg);
     }
+}
+
+.verif{
+    transform: rotateX(180deg);
+    animation : spinAnimation .3s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes shaking {
+    50%{
+        transform: translate(5px);
+    }
+    100%{
+        transform: translate(-5px);
+    }
+}
+
+.error{
+    animation: shaking .2s;
+}
+
+@keyframes zoom{
+    50%{
+        transform: scaleX(4.3);
+    }
+    75%{
+        transform: scaleY(5);
+    }
+}
+
+.placement{
+    animation: zoom .2s;
 }
 
 @media screen and (max-width: 642px) {

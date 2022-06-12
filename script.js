@@ -6,10 +6,11 @@ var goodLetters
 var allWords
 
 
+
 function regroup(){
     let allWords = ""
     if(!document.getElementById("checkbox").checked){
-        console.log(document.getElementById("checkbox").checked)
+        // console.log(document.getElementById("checkbox").checked)
         for(let i = 4; i < 10; i++){
             let wordList = new XMLHttpRequest();
             wordList.open("GET", "mots/mots_" + String(i) + ".txt", false)
@@ -39,6 +40,10 @@ document.getElementById("wordLength").onchange = function(){
     replay()
 }
 
+document.getElementById("checkbox").onchange = function(){
+    document.getElementById("wordLength").disabled = !document.getElementById("checkbox").checked
+}
+
 function creationGrille(mot){
     for(let i = 0; i < 6; i++){
         let ligne = document.createElement("tr")
@@ -66,14 +71,16 @@ function initKeyboard(){
             key.id = "Backspace"
             img = document.createElement("img")
             img.src = "icons/del.svg"
-            key.className = "specialKey"
+            key.className = "key"
+            key.classList.add("specialKey")
             document.getElementById(key.id).appendChild(img)
         }
         else if(letters[i] == ','){
             key.id = "Enter"
             img = document.createElement("img")
             img.src = "icons/enter.svg"
-            key.className = "specialKey"
+            key.className = "key"
+            key.classList.add("specialKey")
             document.getElementById(key.id).appendChild(img)
         }
         else{
@@ -87,23 +94,37 @@ function initKeyboard(){
 
 document.onkeydown = function (e) {write(e.key)}
 function write(key){
-    console.log(currentFrame)
+    // console.log(currentFrame)
     if("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".includes(key)){
         if(currentFrame.id[1] != mot.length - 1){
             currentFrame = document.getElementById(currentLine.id + String(Number(currentFrame.id[1]) + 1))
+            currentFrame.style.borderColor = "transparent"
             currentFrame.innerHTML = (key).toUpperCase()
             currentFrame.style.color = "#2f0c50"
-            currentFrame.style.backgroundColor = "#008cff"
+            currentFrame.style.backgroundColor = "#B3AEC8"
+            currentFrame.classList.remove("placement")
+            currentFrame.offsetWidth
+            currentFrame.classList.add("placement")
+            if(Number(currentFrame.id[1]) + 1 < mot.length){
+                document.getElementById(currentLine.id + String(Number(currentFrame.id[1]) + 1)).style.borderColor = "black"
+            }
             guess += (key).toUpperCase()
         }
     }
     else if(key == "Backspace"){
-        if(currentFrame.id[1] != 0){
+        if(currentFrame.id[1] != 0){ 
+            if(currentFrame.id[1] != '0'){
+                // console.log(currentFrame.id[1])
+                currentFrame.style.borderColor = "black"
+                if(Number(currentFrame.id[1]) + 1 < mot.length){
+                    document.getElementById(currentLine.id + String(Number(currentFrame.id[1]) + 1)).style.borderColor = "transparent"
+                }
+            }
             currentFrame.innerHTML = ""
             if(goodLetters.includes(currentFrame.id[1])){
                 currentFrame.innerHTML = mot[Number(currentFrame.id[1])]
             }
-            currentFrame.style.backgroundColor = "#135b96"
+            currentFrame.style.backgroundColor = "#8981A9"
             currentFrame = document.getElementById(currentLine.id + String(Number(currentFrame.id[1]) - 1))
             guess = guess.slice(0, -1)
         }
@@ -114,14 +135,28 @@ function write(key){
                 currentLine = document.getElementById(String(Number(currentLine.id) + 1))
                 currentFrame = document.getElementById(currentLine.id + "0")
                 currentFrame.innerHTML = guess
-                currentFrame.style.backgroundColor = "#008cff"
+                currentFrame.style.backgroundColor = "#B3AEC8"
             }
         }
         else if(guess.length != mot.length){
-            alert("Ce mot est trop court.")
+            for(let i = 0; i < guess.length; i++){
+                document.getElementById(currentLine.id + String(i)).classList.remove("placement")
+                document.getElementById(currentLine.id + String(i)).classList.remove("error")
+                document.getElementById(currentLine.id + String(i)).offsetWidth
+                document.getElementById(currentLine.id + String(i)).classList.add("error")
+            }
+            // alert("Ce mot est trop court.")
         }
         else if(!allWords.includes(guess)){
-            alert("Ce mot n'est pas dans le dictionnaire.")
+            // console.log(guess)
+            for(let i = 0; i < guess.length; i++){
+                // console.log(i)
+                document.getElementById(currentLine.id + String(i)).classList.remove("placement")
+                document.getElementById(currentLine.id + String(i)).classList.remove("error")
+                document.getElementById(currentLine.id + String(i)).offsetWidth
+                document.getElementById(currentLine.id + String(i)).classList.add("error")
+            }
+            // alert("Ce mot n'est pas dans le dictionnaire.")
         }
     }
 }
@@ -179,19 +214,21 @@ function verification(){
 
 function lineAnim(l, i, guess){
     setTimeout(() => {
-        document.getElementById(String(Number(currentLine.id - 1)) + String(i)).className = "verif"
+        document.getElementById(String(Number(currentLine.id - 1)) + String(i)).classList.remove("error")
+        document.getElementById(String(Number(currentLine.id - 1)) + String(i)).classList.remove("placement")
+        document.getElementById(String(Number(currentLine.id - 1)) + String(i)).classList.add("verif")
         setTimeout(() => {
             switch(l){
                 case 'r':
-                    document.getElementById(String(Number(currentLine.id - 1)) + String(i)).style.backgroundColor = "red"
-                    document.getElementById(mot[i]).style.backgroundColor = "red"
+                    document.getElementById(String(Number(currentLine.id - 1)) + String(i)).style.backgroundColor = "#2E6B65"
+                    document.getElementById(mot[i]).style.backgroundColor = "#2E6B65"
                     break;
                 case 'j':
-                    document.getElementById(String(Number(currentLine.id - 1)) + String(i)).style.backgroundColor = "yellow"
-                    document.getElementById(guess[i]).style.backgroundColor = "yellow"
+                    document.getElementById(String(Number(currentLine.id - 1)) + String(i)).style.backgroundColor = "#AC8949"
+                    document.getElementById(guess[i]).style.backgroundColor = "#AC8949"
                     break;
                 case 'g':
-                    document.getElementById(String(Number(currentLine.id - 1)) + String(i)).style.backgroundColor = "#135b96"
+                    document.getElementById(String(Number(currentLine.id - 1)) + String(i)).style.backgroundColor = "#8981A9"
                     document.getElementById(guess[i]).style.backgroundColor = "rgb(50, 50, 54)"
                     break;
             }
@@ -215,7 +252,8 @@ function replay(){
     currentLine = document.getElementById("0")
     document.getElementById("00").innerHTML = mot[0]
     currentFrame = document.getElementById("00")
-    currentFrame.style.backgroundColor = "#008cff"
+    currentFrame.style.backgroundColor = "#B3AEC8"
+    document.getElementById("01").style.borderColor = "black"
     initKeyboard()
 }
 
