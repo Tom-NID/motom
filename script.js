@@ -71,6 +71,7 @@ function initKeyboard(){
     keyboard.id = "keyboard"
     for(let i = 0; i < 28; i++){
         let key = document.createElement("button")
+        key.tabIndex = "-1"
         document.getElementById("keyboard").appendChild(key)
         if(letters[i] == '.'){
             key.id = "Backspace"
@@ -227,7 +228,8 @@ function lineAnim(l, i, guess){
                     document.getElementById(mot[i]).style.backgroundColor = "#2E6B65"
                     break;
                 case 'j':
-                    if(!document.getElementById(guess[i]).style["backgroundColor"] == rgb(46, 107, 101)){
+                    console.log(document.getElementById(guess[i]).style["backgroundColor"])
+                    if(document.getElementById(guess[i]).style["backgroundColor"] != "rgb(46, 107, 101)"){
                         document.getElementById(String(Number(currentLine.id)) + String(i)).style.backgroundColor = "#AC8949"
                     }
                     document.getElementById(guess[i]).style.backgroundColor = "#AC8949"
