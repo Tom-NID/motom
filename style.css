@@ -21,14 +21,15 @@ title{
 }
 
 .frame{
-    width: 48px;
+    width: 42px;
+    height: 40px;
     background-color: #8981A9;
     color: #2f0c50;
     text-align: center;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 40px;
+    font-size: 35px;
     border-radius: 5px;
-    border: solid 1px transparent;
+    border: solid 3px transparent;
     user-select: none;
 }
 
@@ -45,13 +46,17 @@ title{
     width: 50px;
     height: 50px;
     background-color: gray;
-    border-radius: 10px;
+    border-radius: 8px;
     border: none;
     margin: 2px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 25px;
     user-select: none;
 
+}
+
+.key:focus{
+    outline: none;
 }
 
 .specialKey{
@@ -108,13 +113,95 @@ title{
     height: min-content;
     font-size: 40px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    color: wheat;
-    -webkit-text-stroke-width: 1px;
-    -webkit-text-stroke-color: black;
+    color: black;
     text-align: center;
     position: absolute;
     opacity: 0;
     z-index: 1;
+    user-select: none;
+}
+
+#end{
+    width: 300px;
+    height: 320px;
+    border-radius: 15px;
+    margin-left: calc(50vw - 166px);
+    margin-top: calc(10vh - 25px);
+    background-color: #2f0c50;
+    font-size: 35px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: #D0B27A;
+    text-align: center;
+    position: absolute;
+    opacity: 0;
+    padding-top: 10px;
+    user-select: none;
+    z-index: 1;
+}
+
+#end>h2{
+    margin-top: -1px;
+}
+
+#replay{
+    width: 50px;
+    height: 50px;
+    padding-left: 3px;
+    padding-top: 3px;
+    border-radius: 50%;
+}
+
+#solution{
+    width: 300px;
+    background-color: #5c1b99;
+    text-align: left;
+}
+
+#solution>button{
+    margin-left: 250px;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    background-color: gray;
+    border-radius: 10px;
+    margin-top: 2px;
+}
+
+#solution>h3{
+    font-size: 40px;
+    margin-left: 10px;
+}
+
+@keyframes pop {
+    0%{
+        transform: scale(0.5);
+        opacity: 1;
+    }
+    100%{
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.pop{
+    animation: pop .5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes depop {
+    0%{
+        transform: scale(1);
+        opacity: 1;
+    }
+    100%{
+        transform: scale(0.5);
+        opacity: 0;
+    }
+}
+
+.depop{
+    animation: depop .5s;
+    animation-fill-mode: forwards;
 }
 
 @keyframes spinAnimation {
@@ -145,10 +232,10 @@ title{
 
 @keyframes zoom{
     50%{
-        transform: scaleX(4.3);
+        transform: scale(2);
     }
     75%{
-        transform: scaleY(5);
+        transform: scale(1);
     }
 }
 
@@ -171,20 +258,6 @@ title{
     animation: notification 2s;
 }
 
-@media screen and (max-width: 642px) {
-    .frame{
-        width: 38px;
-        font-size: 35px;
-    }
-    .verif{
-        width: 38px;
-        font-size: 35px;
-    }
-    .line{
-        height: 40px;
-    }
-}
-
 @media screen and (max-width: 550px) {
     .key{
         width: 40px;
@@ -198,17 +271,14 @@ title{
 }
 
 
-@media screen and (max-width: 522px) {
+@media screen and (max-width: 542px) {
     .frame{
-        width: 28px;
-        font-size: 25px;
-    }
-    .verif{
-        width: 28px;
+        width: 32px;
+        height: 32px;
         font-size: 25px;
     }
     .line{
-        height: 30px;
+        height: 40px;
     }
 }
 
@@ -224,17 +294,14 @@ title{
     }
 }
 
-@media screen and (max-width: 402px) {
+@media screen and (max-width: 442px) {
     .frame{
-        width: 23px;
-        font-size: 20px;
-    }
-    .verif{
-        width: 23px;
+        width: 22px;
+        height: 22px;
         font-size: 20px;
     }
     .line{
-        height: 25px;
+        height: 30px;
     }
 }
 
